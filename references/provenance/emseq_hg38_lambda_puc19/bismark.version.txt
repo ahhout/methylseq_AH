@@ -1,0 +1,9 @@
+
+
+          Bismark - Bisulfite Mapper and Methylation Caller.
+
+                       Bismark Version: v0.25.1
+        Copyright 2010-25 Felix Krueger, Altos Bioinformatics  
+                https://github.com/FelixKrueger/Bismark
+
+

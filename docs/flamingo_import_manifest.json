@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "started_utc": "2026-10-30T14:48:40.461742+00:00",
+  "original_repository": "/home/a_houtman/em_seq",
+  "original_commit": "c86141ab948d2c338dcc38eec7caded269134584",
+  "original_checkpoint": "clean tracked HEAD; unrelated untracked files left untouched",
+  "fork_master": "b6aa88ef5399cb2992f12d8072e2c8fedf39d003",
+  "upstream_release": "4.2.0",
+  "upstream_release_commit": "5aa56467a85a5e2d6795ea72dfa5a5f0c9babc23",
+  "post_release_commits": 4,
+  "baseline_comparison": "Only .github/workflows/* and .nf-core.yml differ; pipeline code is identical.",
+  "reference_target": "/mnt/beegfs01/scratch/a_houtman/nextflow/nf-core-methylseq/references/wgbstools_hg38_lambda_puc19_v1",
+  "imported": [
+    {
+      "source": "/home/a_houtman/em_seq/run_methylseq_integrated.sh",
+      "path": "run_methylseq_integrated.sh",
+      "kind": "file",
+      "sha256": "125097c3c156cf6d4dfcf301cb15b780f45cd7566cd9403d4ab7b3a5973e16f9",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/config/nextflow.config",
+      "path": "config/nextflow.config",
+      "kind": "file",
+      "sha256": "b9252d469509afcad2d92561f68b73b156866d9cf249efce7cc3953608c30269",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/config/params.emseq.integrated.yml",
+      "path": "config/params.emseq.integrated.yml",
+      "kind": "file",
+      "sha256": "78d465340519062d0d7ba6029f1fd1a22dbb5942321a1fc3289c587b06cbff5a",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/config/methylseq_cache_session.json",
+      "path": "config/methylseq_cache_session.json",
+      "kind": "file",
+      "sha256": "db34951525ce339c7265787f22da7cc87210aef17dce0b5d0a35121ccbdc956d",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/samplesheets/samplesheet.csv",
+      "path": "samplesheets/samplesheet.csv",
+      "kind": "file",
+      "sha256": "b813e9e497dc22f31123c1b8756c8515d23582cc59ceab5c90ed645664960321",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/samplesheets/samplesheet.2026-08-31-8samples.csv",
+      "path": "samplesheets/samplesheet.2026-08-31-8samples.csv",
+      "kind": "file",
+      "sha256": "30e514a114845dc38fc7a16dac7021a203973bb1174aa5e1938aa895eee4fe92",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/scripts/methylseq_cache_session.py",
+      "path": "scripts/methylseq_cache_session.py",
+      "kind": "file",
+      "sha256": "8feee79a1b7f86be7bfbbfc66f659fa6ed942f3278d5e000782ed18c4efa60f1",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/scripts/summarize_emseq_controls.py",
+      "path": "scripts/summarize_emseq_controls.py",
+      "kind": "file",
+      "sha256": "78f37589925a16769cdb43bde7ad02dd8d0410f813dc58be5d14aaf94041a3ae",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/tests/test_methylseq_cache_session.py",
+      "path": "tests/test_methylseq_cache_session.py",
+      "kind": "file",
+      "sha256": "e4f702a7ce561c3b944bcf0b57a4857ff46ace3536db457aa8e6cb5be5925a83",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/environment.yml",
+      "path": "environment.yml",
+      "kind": "file",
+      "sha256": "5130e644713942be5fdb9f8abf72b4cbe3a409d70e758ea76a5d0c2d7fa5a2ee",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/references/emseq_hg38_lambda_puc19",
+      "path": "references/emseq_hg38_lambda_puc19",
+      "kind": "symlink",
+      "sha256": "c8d4b94b39706657aeed2c3b8225dc7e27cc31a1e2971c801933b0ddc3396c62",
+      "checksum_scope": "link text"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/references/emseq_hg38_lambda_puc19/manifest.tsv",
+      "path": "references/provenance/emseq_hg38_lambda_puc19/manifest.tsv",
+      "kind": "file",
+      "sha256": "23154f797fd49f9b2917b741cde83f3c43f4d4feae1460e8e92d6d43d9ae0963",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/references/emseq_hg38_lambda_puc19/bismark.version.txt",
+      "path": "references/provenance/emseq_hg38_lambda_puc19/bismark.version.txt",
+      "kind": "file",
+      "sha256": "8d86d68cb95edaeccfe7a68201b197bf47f46226836df85e97f7bbd6ad12d3d8",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/references/emseq_hg38_lambda_puc19/bismark_container.sha256",
+      "path": "references/provenance/emseq_hg38_lambda_puc19/bismark_container.sha256",
+      "kind": "file",
+      "sha256": "7c3dbb81f3dcf4aca5b24feba1bbbb2732754634ec9891ba2ffcdec4fa0c48c2",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/references/emseq_hg38_lambda_puc19/BismarkIndex/genome.fa.sha256",
+      "path": "references/provenance/emseq_hg38_lambda_puc19/BismarkIndex/genome.fa.sha256",
+      "kind": "file",
+      "sha256": "ffafff8b4cf5c0f04d69087b17dd8ec9e2dc4056cfa2ab80cc15dec756bbfd75",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/references/emseq_hg38_lambda_puc19/BismarkIndex/bismark_index_files.sha256",
+      "path": "references/provenance/emseq_hg38_lambda_puc19/BismarkIndex/bismark_index_files.sha256",
+      "kind": "file",
+      "sha256": "5bbdde4ca060db0a4d6ca15b169bb64c3fb08769f1ba381eab2d84c59d803691",
+      "checksum_scope": "file bytes"
+    },
+    {
+      "source": "/home/a_houtman/em_seq/references/emseq_hg38_lambda_puc19/BismarkIndex/bismark_index_files.sha256.sha256",
+      "path": "references/provenance/emseq_hg38_lambda_puc19/BismarkIndex/bismark_index_files.sha256.sha256",
+      "kind": "file",
+      "sha256": "04b96cee95ba815b4fe230a2fba9160bec6ee6fa3dabb3e1ae82725255aa6637",
+      "checksum_scope": "file bytes"
+    }
+  ],
+  "adaptations": [],
+  "public_samplesheet_review": {
+    "authorization": "User explicitly requested publication of real samplesheets unchanged.",
+    "fields": [
+      "sample",
+      "fastq_1",
+      "fastq_2",
+      "genome"
+    ],
+    "current_rows": 4,
+    "historical_rows": 8,
+    "review": "Pseudonymous sample identifiers and absolute FASTQ paths intentionally retained. No names, diagnoses, birth dates, contact details or clinical metadata columns included. This review does not assert anonymisation."
+  }
+}
