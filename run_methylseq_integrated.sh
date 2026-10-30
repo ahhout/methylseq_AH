@@ -15,8 +15,12 @@
 set -euo pipefail
 readonly ATTEMPT_STARTED_UTC="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
-SCRIPT_DIR="/home/a_houtman/em_seq"
-cd "$SCRIPT_DIR"
+# sbatch executes a spool copy, so this approved source path is explicit.
+SCRIPT_DIR="/home/a_houtman/methylseq_AH"
+RUNTIME_ROOT="/home/a_houtman/em_seq"
+[[ -d "$SCRIPT_DIR" ]] || { echo "Missing script directory: $SCRIPT_DIR" >&2; exit 1; }
+[[ -d "$RUNTIME_ROOT" ]] || { echo "Missing Nextflow runtime directory: $RUNTIME_ROOT" >&2; exit 1; }
+cd "$RUNTIME_ROOT"
 
 CONFIG="$SCRIPT_DIR/config/nextflow.config"
 PARAMS="$SCRIPT_DIR/config/params.emseq.integrated.yml"
@@ -39,9 +43,17 @@ PIPELINE_INFO="$OUTPUT/pipeline_info"
 SUBMITTED_DIR="$PIPELINE_INFO/submitted"
 COVERAGE_DIR="$OUTPUT/bismark/methylation_calls/methylation_coverage"
 CONTROL_QC="$OUTPUT/control_qc/control_qc.tsv"
-RUN_LINK="$SCRIPT_DIR/outputs/$RUN_NAME"
+RUN_LINK="$RUNTIME_ROOT/outputs/$RUN_NAME"
 
-[[ -d "$SCRIPT_DIR" ]] || { echo "Missing script directory: $SCRIPT_DIR" >&2; exit 1; }
+command -v cmp >/dev/null 2>&1 || { echo "cmp is unavailable" >&2; exit 1; }
+cmp -s -- "${BASH_SOURCE[0]}" "$SCRIPT_DIR/run_methylseq_integrated.sh" || {
+    echo "Submitted launcher differs from the committed source; resubmit from this checkout" >&2; exit 1;
+}
+[[ -s "$SCRIPT_DIR/main.nf" ]] || { echo "Missing fork pipeline: $SCRIPT_DIR/main.nf" >&2; exit 1; }
+[[ -s "$SCRIPT_DIR/nextflow.config" ]] || { echo "Missing fork pipeline config: $SCRIPT_DIR/nextflow.config" >&2; exit 1; }
+[[ -f "$SESSION_HELPER" ]] || { echo "Missing session helper: $SESSION_HELPER" >&2; exit 1; }
+[[ -d "$WORKDIR" ]] || { echo "Missing existing shared work directory: $WORKDIR" >&2; exit 1; }
+[[ -d "$RESULTS_BASE" ]] || { echo "Missing existing results root: $RESULTS_BASE" >&2; exit 1; }
 [[ -f "$CONFIG" ]] || { echo "Missing Nextflow config: $CONFIG" >&2; exit 1; }
 [[ -f "$PARAMS" ]] || { echo "Missing integrated params file: $PARAMS" >&2; exit 1; }
 [[ -f "$SAMPLESHEET" ]] || { echo "Missing EM-seq samplesheet: $SAMPLESHEET" >&2; exit 1; }
@@ -123,11 +135,15 @@ fi
 # by cleanup through Slurm; they do not participate in this new lock.
 command -v flock >/dev/null 2>&1 || { echo "flock is unavailable" >&2; exit 1; }
 command -v python3 >/dev/null 2>&1 || { echo "python3 is unavailable" >&2; exit 1; }
+command -v git >/dev/null 2>&1 || { echo "git is unavailable" >&2; exit 1; }
+# Reject source changes before creating outputs; begin checks the identity again.
+python3 "$SESSION_HELPER" identity --runtime-root "$RUNTIME_ROOT" >/dev/null
+FORK_COMMIT="$(git -C "$SCRIPT_DIR" rev-parse HEAD)"
 exec 9>"$MAINTENANCE_LOCK"
 flock -n 9 || { echo "Shared cache is in use or under maintenance" >&2; exit 1; }
-SESSION_ID="$(python3 "$SESSION_HELPER" validate)"
+SESSION_ID="$(python3 "$SESSION_HELPER" validate --runtime-root "$RUNTIME_ROOT")"
 
-mkdir -p "$WORKDIR" "$SUBMITTED_DIR" "$SCRIPT_DIR/.nextflow" "$SCRIPT_DIR/logs" "$SCRIPT_DIR/outputs"
+mkdir -p "$SUBMITTED_DIR" "$RUNTIME_ROOT/logs" "$RUNTIME_ROOT/outputs"
 [[ -d "$WORKDIR" ]] || { echo "Missing work directory: $WORKDIR" >&2; exit 1; }
 [[ -d "$OUTPUT" ]] || { echo "Missing output directory: $OUTPUT" >&2; exit 1; }
 
@@ -135,7 +151,7 @@ mkdir -p "$WORKDIR" "$SUBMITTED_DIR" "$SCRIPT_DIR/.nextflow" "$SCRIPT_DIR/logs" 
 if [[ "$OUTPUT_HAS_CONTENT" == "true" ]]; then
     # Checks original snapshot integrity and unchanged scientific inputs.
     # Launcher revisions are preserved separately for each attempt.
-    python3 "$SESSION_HELPER" begin --output "$OUTPUT" --job "$SLURM_JOB_ID" --started-utc "$ATTEMPT_STARTED_UTC" --existing
+    python3 "$SESSION_HELPER" begin --runtime-root "$RUNTIME_ROOT" --output "$OUTPUT" --job "$SLURM_JOB_ID" --started-utc "$ATTEMPT_STARTED_UTC" --existing
 else
     install -m 0755 "$SCRIPT_DIR/run_methylseq_integrated.sh" "$SUBMITTED_DIR/run_methylseq_integrated.sh"
     install -m 0644 "$PARAMS" "$SUBMITTED_DIR/params.emseq.integrated.yml"
@@ -161,17 +177,27 @@ else
         printf 'work_dir\t%s\n' "$WORKDIR"
         printf 'pipeline\tnf-core/methylseq\n'
         printf 'pipeline_version\t4.2.0\n'
+        printf 'pipeline_source\t%s\n' "$SCRIPT_DIR"
+        printf 'fork_commit\t%s\n' "$FORK_COMMIT"
+        printf 'upstream_release_commit\t5aa56467a85a5e2d6795ea72dfa5a5f0c9babc23\n'
+        printf 'fork_master_baseline\tb6aa88ef5399cb2992f12d8072e2c8fedf39d003\n'
+        printf 'runtime_root\t%s\n' "$RUNTIME_ROOT"
+        printf 'params_file\t%s\n' "$PARAMS"
+        printf 'config_file\t%s\n' "$CONFIG"
+        printf 'samplesheet\t%s\n' "$SAMPLESHEET"
+        printf 'run_named_utc\t%sT%s:%s:00Z\n' "$RUN_DATE" "${RUN_NAME:11:2}" "${RUN_NAME:14:2}"
+        printf 'nextflow_resume\t%s\n' "$SESSION_ID"
         printf 'resume_existing\t%s\n' "$RESUME_EXISTING"
     } > "$SUBMITTED_DIR/run_manifest.tsv"
 fi
 
 if [[ "$OUTPUT_HAS_CONTENT" != "true" ]]; then
-    python3 "$SESSION_HELPER" begin --output "$OUTPUT" --job "$SLURM_JOB_ID" --started-utc "$ATTEMPT_STARTED_UTC"
+    python3 "$SESSION_HELPER" begin --runtime-root "$RUNTIME_ROOT" --output "$OUTPUT" --job "$SLURM_JOB_ID" --started-utc "$ATTEMPT_STARTED_UTC"
 fi
 record_attempt_exit() {
     local status=$?
     trap - EXIT
-    python3 "$SESSION_HELPER" finish --output "$OUTPUT" --job "$SLURM_JOB_ID" --exit-status "$status" || {
+    python3 "$SESSION_HELPER" finish --runtime-root "$RUNTIME_ROOT" --output "$OUTPUT" --job "$SLURM_JOB_ID" --exit-status "$status" || {
         echo "Failed to record attempt completion; treat provenance as incomplete" >&2
         [[ "$status" -ne 0 ]] || status=1
     }
@@ -186,12 +212,17 @@ source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate nextflow
 command -v nextflow >/dev/null 2>&1 || { echo "nextflow is unavailable after activating the nextflow environment" >&2; exit 1; }
 
+command -v module >/dev/null 2>&1 || { echo "module command is unavailable" >&2; exit 1; }
 module load containers/apptainer/1.3.6
 command -v apptainer >/dev/null 2>&1 || { echo "apptainer is unavailable after loading its module" >&2; exit 1; }
 
+APPTAINER_VERSION="$(apptainer --version)"
+[[ "$APPTAINER_VERSION" == "apptainer version 1.3.6" ]] || {
+    echo "Expected module-provided Apptainer 1.3.6, found: $APPTAINER_VERSION" >&2; exit 1;
+}
+
 NEXTFLOW_COMMAND=(
-    nextflow -log "$NEXTFLOW_LOG" run nf-core/methylseq
-    -r 4.2.0
+    nextflow -log "$NEXTFLOW_LOG" run "$SCRIPT_DIR"
     -config "$CONFIG"
     -params-file "$PARAMS"
     -work-dir "$WORKDIR"
@@ -208,6 +239,11 @@ printf '%q ' "${NEXTFLOW_COMMAND[@]}" > "$COMMAND_RECORD"
 printf '\n' >> "$COMMAND_RECORD"
 cp "$COMMAND_RECORD" "$SUBMITTED_DIR/attempts/$SLURM_JOB_ID/command.sh"
 
+# Check the clean source again after environment setup, immediately before execution.
+python3 "$SESSION_HELPER" identity --runtime-root "$RUNTIME_ROOT" >/dev/null
+[[ "$(git -C "$SCRIPT_DIR" rev-parse HEAD)" == "$FORK_COMMIT" ]] || {
+    echo "Fork commit changed after attempt provenance was recorded" >&2; exit 1;
+}
 "${NEXTFLOW_COMMAND[@]}"
 
 python3 "$CONTROL_REPORTER" \

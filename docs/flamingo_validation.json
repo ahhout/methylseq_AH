@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "started_utc": "2026-10-30T14:56:36.007885+00:00",
+  "completed_utc": "2026-10-30T14:56:38.514955+00:00",
+  "status": "passed",
+  "original_commit": "c86141ab948d2c338dcc38eec7caded269134584",
+  "original_import_commit": "e390b6f595f7fbbcb10493b196d7db0f61d64c3f",
+  "fork_master": "b6aa88ef5399cb2992f12d8072e2c8fedf39d003",
+  "upstream_release_commit": "5aa56467a85a5e2d6795ea72dfa5a5f0c9babc23",
+  "compared_import_entries": 17,
+  "preserved_upstream_files": 426,
+  "post_release_changed_paths": [
+    ".github/workflows/branch.yml",
+    ".github/workflows/fix-linting.yml",
+    ".github/workflows/fix_linting.yml",
+    ".github/workflows/linting.yml",
+    ".github/workflows/linting_comment.yml",
+    ".github/workflows/nf-test.yml",
+    ".github/workflows/pr-comment.yml",
+    ".github/workflows/template-version-comment.yml",
+    ".nf-core.yml"
+  ],
+  "samplesheets_byte_identical": true,
+  "reference_links_and_targets_identical": true,
+  "scientific_parameter_comparison": "Exact parameter bytes after reversing only three repository-location paths; all upstream pipeline/default files identical to baseline",
+  "parameter_path_relocations": 3,
+  "environment_and_cluster_config_byte_identical": true,
+  "limits": [
+    "No production execution or Nextflow configuration evaluation",
+    "Reference payload hashes are retained build evidence; multi-gigabyte payloads not rehashed",
+    "Cache reuse after pipeline-source relocation is untested"
+  ]
+}

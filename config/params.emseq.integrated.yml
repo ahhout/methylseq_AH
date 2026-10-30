@@ -1,9 +1,9 @@
 # Production EM-seq parameters for competitive alignment to GRCh38 and controls.
 
-input: /home/a_houtman/em_seq/samplesheets/samplesheet.csv
+input: /home/a_houtman/methylseq_AH/samplesheets/samplesheet.csv
 
-fasta: /home/a_houtman/em_seq/references/emseq_hg38_lambda_puc19/BismarkIndex/genome.fa
-bismark_index: /home/a_houtman/em_seq/references/emseq_hg38_lambda_puc19/BismarkIndex
+fasta: /home/a_houtman/methylseq_AH/references/emseq_hg38_lambda_puc19/BismarkIndex/genome.fa
+bismark_index: /home/a_houtman/methylseq_AH/references/emseq_hg38_lambda_puc19/BismarkIndex
 igenomes_ignore: true
 
 aligner: bismark

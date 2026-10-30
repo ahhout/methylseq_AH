@@ -131,7 +131,28 @@
       "checksum_scope": "file bytes"
     }
   ],
-  "adaptations": [],
+  "adaptations": [
+    {
+      "path": "run_methylseq_integrated.sh",
+      "reason": "Execute absolute local fork; retain original runtime, session/work/output/lock and logs; require clean committed source, exact Slurm spool/source match and module Apptainer 1.3.6; record fork/input identities and per-attempt UTC evidence.",
+      "adapted_sha256": "201c10f36fe33c499fe221bf110a7a8451533da1d06b75a754cd42669747535d"
+    },
+    {
+      "path": "config/params.emseq.integrated.yml",
+      "reason": "Relocate only input, fasta and bismark_index repository prefixes to /home/a_houtman/methylseq_AH; preserve every scientific setting and comment.",
+      "adapted_sha256": "7a7ef548c69106fc398be35b5987eaed2fa571fc6c32007df26d45a0b17e29c9"
+    },
+    {
+      "path": "scripts/methylseq_cache_session.py",
+      "reason": "Require explicit --runtime-root; compare fork pipeline identities and immutable snapshots on resume; retain original cache/session selection and add per-attempt source/input/command checksums.",
+      "adapted_sha256": "790da1b2fa86685c8b482c9fdeebc9fee6dd0ca7006db951451f7c057d692cc6"
+    },
+    {
+      "path": "tests/test_methylseq_cache_session.py",
+      "reason": "Adapt and extend bounded temporary mocked source/runtime fixtures for local-fork execution, resume guards, locking, missing paths, UTC names, exact Slurm spool source and attempt provenance.",
+      "adapted_sha256": "f227b7c13c03daf989058569ab3efbb19170f6a7892f0ee8d8a4bc33e61b81c0"
+    }
+  ],
   "public_samplesheet_review": {
     "authorization": "User explicitly requested publication of real samplesheets unchanged.",
     "fields": [
@@ -143,5 +164,21 @@
     "current_rows": 4,
     "historical_rows": 8,
     "review": "Pseudonymous sample identifiers and absolute FASTQ paths intentionally retained. No names, diagnoses, birth dates, contact details or clinical metadata columns included. This review does not assert anonymisation."
-  }
+  },
+  "original_import_commit": "c84c02c2987caa7eac0f6e15e506a28974528a8d",
+  "support_changes": {
+    ".gitignore": "Preserved upstream prefix and appended relevant original-project payload/runtime/credential rules; excluded unrelated downstream/metadata paths.",
+    "README.md": "Retained upstream README as exact prefix, appended link to Flamingo operations.",
+    "AGENTS.md": "Added fork-specific instructions preserving scientific approval and operational safeguards.",
+    "references/README.md": "Focused production reference provenance; original broader registry remains untouched.",
+    "docs/flamingo.md": "Source/runtime split, retained scientific defaults and thresholds, launch/resume commands, naming and provenance rules.",
+    "docs/flamingo_bwamem3_milestone.md": "Separate design and approval milestone with existing pilot evidence only.",
+    "scripts/validate_flamingo_import.py": "Read-only deterministic import, baseline and path-only parameter comparison; prints UTC-labelled validation JSON.",
+    "docs/flamingo_validation.json": "Recorded bounded import comparison result.",
+    "docs/flamingo_validation.md": "Exact validation commands, review scope and limits.",
+    "docs/flamingo_publication.json": "Later local-only record of failed publication attempts, automatic approval denial, unchanged public refs and remaining access/approval requirements."
+  },
+  "completed_utc": "2026-10-30T14:56:27.616107+00:00",
+  "local_checkpoint_import_commit": "e390b6f595f7fbbcb10493b196d7db0f61d64c3f",
+  "publication_method": "Connected GitHub Git-object APIs; raw import tree identical to local checkpoint, with new commit metadata and identity."
 }

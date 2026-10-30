@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-10-30T15:02:48.094316+00:00",
+  "status": "blocked",
+  "published": false,
+  "repository": "https://github.com/ahhout/methylseq_AH",
+  "branch": "integration/flamingo-emseq",
+  "prepared_code_commit": "6a4429461e2e0c12aeef41da11cf2544cadb3753",
+  "import_commit": "e390b6f595f7fbbcb10493b196d7db0f61d64c3f",
+  "master_unchanged": "b6aa88ef5399cb2992f12d8072e2c8fedf39d003",
+  "default_branch": "master",
+  "attempts": [
+    {
+      "method": "Git HTTPS dry run",
+      "command": "GIT_TERMINAL_PROMPT=0 git push --dry-run --porcelain origin HEAD:refs/heads/integration/flamingo-emseq",
+      "result": "Failed: no saved HTTPS credentials; could not read Username; terminal prompts disabled"
+    },
+    {
+      "method": "Git SSH reachability",
+      "command": "GIT_SSH_COMMAND='ssh -o BatchMode=yes -o ConnectTimeout=10' git ls-remote git@github.com:ahhout/methylseq_AH.git refs/heads/master refs/heads/integration/flamingo-emseq",
+      "result": "Failed: connection to github.com port 22 timed out"
+    },
+    {
+      "method": "Connected GitHub blob upload",
+      "result": "Zero of 19 reviewed blobs uploaded; API writes returned 403 Resource not accessible by integration, and one manifest upload was denied by automatic approval review. No tree/commit/ref write attempted."
+    }
+  ],
+  "attempt_timing": "Execution timestamps were not separately captured for these publication attempts; this record states inspection time only.",
+  "automatic_approval": {
+    "action": "Upload docs/flamingo_import_manifest.json as a GitHub blob",
+    "reason": "Generated manifest contains internal filesystem paths, provenance metadata and sample-publication assertions that the reviewer judged outside authorization.",
+    "existing_user_scope": "Request explicitly calls for an import manifest with original commit, imported paths, checksums and adaptations, and publishing integration/flamingo-emseq with unchanged reviewed samplesheets.",
+    "next_step": "Obtain explicit manifest-publication approval before retrying, and enable repository Contents write access or authenticated Git transport."
+  },
+  "review": {
+    "new_reachable_commits": 2,
+    "unique_blobs": 32,
+    "total_blob_bytes": 162105,
+    "maximum_blob_bytes": 23572,
+    "credential_signature_matches": 0,
+    "forbidden_payload_matches": 0,
+    "scope": "The two prepared integration commits e390b6f and 6a44294, before the later local blocked-publication status record."
+  },
+  "preservation": "Original /home/a_houtman/em_seq tracked state remains clean at c86141ab948d2c338dcc38eec7caded269134584; no production pipeline run or runtime cleanup performed.",
+  "remote_verification": "After failed attempts, GitHub branch search returned no integration/flamingo-emseq branch; git ls-remote still reports master b6aa88ef5399cb2992f12d8072e2c8fedf39d003 and repository default remains master."
+}

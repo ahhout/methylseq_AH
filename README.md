@@ -123,3 +123,9 @@ You can cite the `nf-core` publication as follows:
 > Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.
 >
 > _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).
+
+## Flamingo EM-seq setup
+
+See the [Flamingo operating instructions](docs/flamingo.md) for this fork's
+reviewed Slurm/Apptainer setup, separate source/runtime locations, exact
+launch/resume commands and the proposed BWA-MEM3 follow-up milestone.
