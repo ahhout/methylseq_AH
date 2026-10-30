@@ -1,12 +1,12 @@
 {
   "schema": 1,
   "recorded_utc": "2026-10-30T15:02:48.094316+00:00",
-  "status": "blocked",
-  "published": false,
+  "status": "published",
+  "published": true,
   "repository": "https://github.com/ahhout/methylseq_AH",
   "branch": "integration/flamingo-emseq",
-  "prepared_code_commit": "6a4429461e2e0c12aeef41da11cf2544cadb3753",
-  "import_commit": "e390b6f595f7fbbcb10493b196d7db0f61d64c3f",
+  "prepared_code_commit": "149a8a2b1e41cf96e81a85bb4d7f96e6c7a35190",
+  "import_commit": "c84c02c2987caa7eac0f6e15e506a28974528a8d",
   "master_unchanged": "b6aa88ef5399cb2992f12d8072e2c8fedf39d003",
   "default_branch": "master",
   "attempts": [
@@ -23,6 +23,16 @@
     {
       "method": "Connected GitHub blob upload",
       "result": "Zero of 19 reviewed blobs uploaded; API writes returned 403 Resource not accessible by integration, and one manifest upload was denied by automatic approval review. No tree/commit/ref write attempted."
+    },
+    {
+      "method": "Reconnected GitHub app",
+      "result": "Success: all requested import/adaptation blobs, both verified trees, both commits and integration/flamingo-emseq ref created.",
+      "verified_utc": "2026-10-30T15:52:08.351989+00:00"
+    },
+    {
+      "method": "Git HTTPS dry run after reconnection",
+      "command": "GIT_TERMINAL_PROMPT=0 git push --dry-run --porcelain origin HEAD:refs/heads/integration/flamingo-emseq",
+      "result": "Still unavailable: terminal Git has no saved HTTPS credentials. This does not affect publication completed through the connected GitHub app."
     }
   ],
   "attempt_timing": "Execution timestamps were not separately captured for these publication attempts; this record states inspection time only.",
@@ -30,7 +40,10 @@
     "action": "Upload docs/flamingo_import_manifest.json as a GitHub blob",
     "reason": "Generated manifest contains internal filesystem paths, provenance metadata and sample-publication assertions that the reviewer judged outside authorization.",
     "existing_user_scope": "Request explicitly calls for an import manifest with original commit, imported paths, checksums and adaptations, and publishing integration/flamingo-emseq with unchanged reviewed samplesheets.",
-    "next_step": "Obtain explicit manifest-publication approval before retrying, and enable repository Contents write access or authenticated Git transport."
+    "prior_next_step": "Obtain explicit manifest-publication approval before retrying, and enable repository Contents write access or authenticated Git transport.",
+    "status": "resolved_on_retry",
+    "resolution": "The requested import-manifest blob upload was approved and succeeded after reconnection. No sensitive payload or scientific setting was added.",
+    "resolution_recorded_utc": "2026-10-30T15:52:08.351989+00:00"
   },
   "review": {
     "new_reachable_commits": 2,
@@ -42,5 +55,12 @@
     "scope": "The two prepared integration commits e390b6f and 6a44294, before the later local blocked-publication status record."
   },
   "preservation": "Original /home/a_houtman/em_seq tracked state remains clean at c86141ab948d2c338dcc38eec7caded269134584; no production pipeline run or runtime cleanup performed.",
-  "remote_verification": "After failed attempts, GitHub branch search returned no integration/flamingo-emseq branch; git ls-remote still reports master b6aa88ef5399cb2992f12d8072e2c8fedf39d003 and repository default remains master."
+  "remote_verification": "Integration branch creation succeeded at prepared_code_commit; fetched remote tree exactly matches the reviewed staged tree. Master and default-branch identity are checked separately after final status publication.",
+  "publication_verified_utc": "2026-10-30T15:52:08.351989+00:00",
+  "local_checkpoint_import_commit": "e390b6f595f7fbbcb10493b196d7db0f61d64c3f",
+  "local_checkpoint_prepared_code_commit": "6a4429461e2e0c12aeef41da11cf2544cadb3753",
+  "url": "https://github.com/ahhout/methylseq_AH/tree/integration/flamingo-emseq",
+  "method": "Connected GitHub Git-object APIs; exact trees verified against reviewed local content; branch created at prepared_code_commit.",
+  "local_checkpoint_branch": "checkpoint/flamingo-before-connected-publication",
+  "validation": "Read-only import comparison rerun against public IDs: all 17 imports and 426 upstream files verified; samplesheets, reference target, scientific setting bytes and runtime selection retained. No production execution. The 27 passing tests apply to unchanged code/test bytes."
 }

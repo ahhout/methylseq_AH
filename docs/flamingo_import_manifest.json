@@ -176,7 +176,7 @@
     "scripts/validate_flamingo_import.py": "Read-only deterministic import, baseline and path-only parameter comparison; prints UTC-labelled validation JSON.",
     "docs/flamingo_validation.json": "Recorded bounded import comparison result.",
     "docs/flamingo_validation.md": "Exact validation commands, review scope and limits.",
-    "docs/flamingo_publication.json": "Later local-only record of failed publication attempts, automatic approval denial, unchanged public refs and remaining access/approval requirements."
+    "docs/flamingo_publication.json": "Record of historical publication failures, restored access, verified successful app publication, retained local checkpoints and the remaining terminal push-dry-run limitation."
   },
   "completed_utc": "2026-10-30T14:56:27.616107+00:00",
   "local_checkpoint_import_commit": "e390b6f595f7fbbcb10493b196d7db0f61d64c3f",

@@ -1,19 +1,21 @@
 # Flamingo integration validation
 
-**Publication status:** the integration is prepared and committed locally but
-was not published. HTTPS Git lacks credentials, SSH port 22 timed out, and the
-connected GitHub app rejected writes with HTTP 403. Automatic approval review
-also denied uploading the import manifest because it contains internal paths
-and provenance metadata. See [publication evidence](flamingo_publication.json).
-The public branch therefore does not yet meet the publication acceptance gate.
+**Publication status:** [integration/flamingo-emseq](https://github.com/ahhout/methylseq_AH/tree/integration/flamingo-emseq)
+is published through the reconnected GitHub app. The import and adaptation
+Git trees match the reviewed local content exactly. The local branch tracks
+the public branch; the earlier local commits remain in the local checkpoint
+branch. See [publication evidence](flamingo_publication.json). Terminal Git's
+HTTPS push dry run still lacks credentials; it was attempted again after
+reconnection and is not claimed to have passed. No master/default change was
+requested or performed.
 
 The reconciliation used bounded local checks, without submitting Slurm jobs or
 rerunning production samples. Bismark, the scientific params and dependencies
 were preserved. Results below describe the preparation on 30 October 2026.
 [`flamingo_validation.json`](flamingo_validation.json) retains explicit UTC
-start/completion timestamps for the initial local import comparison. That report
-retains the local checkpoint ID; the public import has the identical verified
-tree, with GitHub-assigned commit metadata.
+start/completion timestamps for the repeated import comparison against the
+public import ID. The earlier local comparison remains in prior commit history.
+GitHub assigned new commit metadata while preserving the reviewed import tree.
 
 ## Checks and results
 
